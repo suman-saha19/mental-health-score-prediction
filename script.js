@@ -49,7 +49,9 @@ themeToggle.addEventListener('click', () => {
 // When FastAPI serves the page, requests stay on the same origin. The local
 // fallback also keeps the page useful when it is opened directly during design.
 
-const API_BASE_URL = window.location.protocol === 'file:' ? 'http://localhost:8000' : window.location.origin;
+// The frontend may be hosted separately as a static site, so API calls must
+// always go to the deployed FastAPI service rather than the static-site URL.
+const API_BASE_URL = 'https://mental-health-score-prediction-gz2r.onrender.com';
 
 
 // Countries the backend keeps as their own group; anything else is bucketed
