@@ -21,10 +21,22 @@ A machine learning project that predicts mental health scores using student soci
 - `style.css` — frontend styling
 - `requirements.txt` — Python dependencies
 
-## Running the Backend
+## Running the application
 
-Install dependencies:
+Create a Python virtual environment, install the required packages, then start
+the FastAPI app:
 
 ```bash
-pip install -r requirements.txt
+python -m venv .venv
+.venv\Scripts\activate
+pip install fastapi uvicorn joblib pandas scikit-learn
+uvicorn main:app --reload
+```
+
+Open [http://localhost:8000](http://localhost:8000). The server delivers the
+HTML, CSS, and JavaScript page and exposes the prediction endpoint at
+`POST /predict`.
+
+The form validates the model inputs in the browser, reports API availability,
+shows useful error states, and renders the returned score on an animated gauge.
 

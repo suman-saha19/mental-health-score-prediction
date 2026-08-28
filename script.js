@@ -2,8 +2,9 @@
 // Config
 // ---------------------------------------------------------------------------
 
-// URL of the FastAPI backend. Edit this if it isn't running on localhost:8000.
-const API_BASE_URL = 'http://localhost:8000';
+// When FastAPI serves the page, requests stay on the same origin. The local
+// fallback also keeps the page useful when it is opened directly during design.
+const API_BASE_URL = window.location.protocol === 'file:' ? 'http://localhost:8000' : window.location.origin;
 
 // Countries the backend keeps as their own group; anything else is bucketed
 // into "Other" server-side (see `top_countries` in main.py).
@@ -304,14 +305,16 @@ async function checkApiHealth() {
   const dot = document.getElementById('api-status-dot');
   const text = document.getElementById('api-status-text');
   try {
-    const res = await fetch(`${API_BASE_URL}/`);
+    const res = await fetch(`${API_BASE_URL}/api/health`);
     if (res.ok) {
+      dot.classList.remove('down');
       dot.classList.add('up');
       text.textContent = 'API connected';
     } else {
       throw new Error('not ok');
     }
   } catch {
+    dot.classList.remove('up');
     dot.classList.add('down');
     text.textContent = 'API offline';
   }
